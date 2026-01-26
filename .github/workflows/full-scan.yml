@@ -19,7 +19,7 @@ jobs:
         id: reglint
         uses: Kareem1990/reglint-action@main
         with:
-          api-key: 'https://jjeu54sgnro4odqvth5yhkahki0cfwpt.lambda-url.us-east-1.on.aws/'
+          api-key: ${{ secrets.REGLINT_API_URL }}
           frameworks: 'GDPR,CCPA,HIPAA'
           max-critical: 0
           max-high: 0
