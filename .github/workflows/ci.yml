@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
         uses: Kareem1990/reglint-action@main
         with:
-          api-key: ${{ secrets.REGLINT_API_KEY }}
+          api-key: 'https://jjeu54sgnro4odqvth5yhkahki0cfwpt.lambda-url.us-east-1.on.aws/'
           frameworks: 'GDPR,CCPA'
           max-critical: 999
           max-high: 999
