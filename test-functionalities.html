@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reglint Testing - User Data Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .data-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .data-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .data-item strong {
+            color: #667eea;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Reglint Compliance Testing Suite</h1>
+            <p>Testing Page for Security & Compliance Scanning</p>
+        </div>
+
+        <!-- User Data Collection Form -->
+        <div class="card">
+            <h2>📝 User Data Collection Form</h2>
+            <form id="userForm">
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ssn">Social Security Number *</label>
+                        <input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="creditCard">Credit Card Number *</label>
+                    <input type="text" id="creditCard" name="creditCard" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                    </div>
+
+                <div class="form-group">
+                    <label for="address">Street Address *</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCode">ZIP Code *</label>
+                        <input type="text" id="zipCode" name="zipCode" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Additional Comments</label>
+                    <textarea id="comments" name="comments" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Submit Data</button>
+            </form>
+        </div>
+
+        <!-- Data Display Section -->
+        <div class="card">
+            <h2>📊 Collected User Data</h2>
+            <div id="displayData" class="data-display">
+                <p>No data collected yet. Submit the form above to see data here.</p>
+            </div>
+        </div>
+
+        <!-- Hardcoded Sensitive Data -->
+        <div class="card">
+            <h2>🔑 Exposed Sensitive Information</h2>
+            <div class="warning">
+                <strong>⚠️ Warning:</strong> This section contains intentionally exposed sensitive data for testing purposes.
+            </div>
+            
+            <div class="data-display">
+                <div class="data-item">
+                    <strong>Admin Email:</strong> admin@company.com
+                </div>
+                <div class="data-item">
+                    <strong>Support Email:</strong> support@company.com
+                </div>
+                <div class="data-item">
+                    <strong>Test User SSN:</strong> 123-45-6789
+                </div>
+                <div class="data-item">
+                    <strong>Test Credit Card:</strong> 4532-1234-5678-9010
+                </div>
+                <div class="data-item">
+                    <strong>Customer Phone:</strong> +1-555-123-4567
+                </div>
+            </div>
+        </div>
+
+        <!-- API Keys and Credentials -->
+        <div class="card">
+            <h2>🔐 Exposed API Keys & Credentials</h2>
+            <div class="error">
+                <strong>🚨 Critical:</strong> Hardcoded credentials detected in source code!
+            </div>
+            
+            <div class="code-block">
+// AWS Credentials
+const AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE";
+const AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+const AWS_REGION = "us-east-1";
+
+// API Keys
+const GOOGLE_API_KEY = "AIza" + "SyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI";
+const SENDGRID_API_KEY = "SG." + "1234567890abcdefghijklmnopqrstuvwxyz";
+
+// Database Connection
+const DB_CONNECTION_STRING = "mongodb://admin:P@ssw0rd123@production-db.example.com:27017/userdata";
+const MYSQL_PASSWORD = "SuperSecret123!";
+
+// OAuth Tokens
+const GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuvwxyz";
+const BEARER_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U";
+            </div>
+        </div>
+
+        <!-- SQL Injection Test -->
+        <div class="card">
+            <h2>💉 SQL Injection Vulnerable Search</h2>
+            <div class="form-group">
+                <label for="searchQuery">Search Users (Vulnerable to SQL Injection)</label>
+                <input type="text" id="searchQuery" placeholder="Enter user ID or name">
+            </div>
+            <button onclick="vulnerableSearch()" class="btn">Search</button>
+            <div id="searchResults" class="data-display" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- XSS Vulnerable Section -->
+        <div class="card">
+            <h2>⚡ XSS Vulnerable Comment Section</h2>
+            <div class="form-group">
+                <label for="userComment">Post a Comment (Vulnerable to XSS)</label>
+                <textarea id="userComment" rows="3" placeholder="Enter your comment..."></textarea>
+            </div>
+            <button onclick="postComment()" class="btn">Post Comment</button>
+            <div id="commentsSection" class="data-display" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- Compliance Violations Notice -->
+        <div class="card">
+            <h2>⚖️ Compliance Violations</h2>
+            <div class="error">
+                <strong>Missing Compliance Requirements:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>❌ No Cookie Consent Banner</li>
+                    <li>❌ No Privacy Policy Link</li>
+                    <li>❌ No Terms of Service</li>
+                    <li>❌ No Data Retention Policy</li>
+                    <li>❌ No GDPR Compliance Notice</li>
+                    <li>❌ No CCPA Compliance Notice</li>
+                    <li>❌ No Data Processing Agreement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded API Keys and Secrets (Security Issue)
+        const API_KEY = "pk" + "_live_" + "test123456789abcdefghijklmnop";
+        const JWT_SECRET = "my-super-secret-jwt-key-12345";
+        const ENCRYPTION_KEY = "AES256-CBC-SECRET-KEY-32CHARS!";
+        
+        // AWS Credentials in JavaScript
+        const awsConfig = {
+            accessKeyId: "AKIAIOSFODNN7EXAMPLE",
+            secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+            region: "us-west-2"
+        };
+
+        // Database credentials
+        const dbConfig = {
+            host: "prod-database.example.com",
+            user: "admin",
+            password: "Admin123!@#",
+            database: "production_db",
+            port: 3306
+        };
+
+        // Form submission handler
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data (No validation - Security Issue)
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                ssn: document.getElementById('ssn').value,
+                creditCard: document.getElementById('creditCard').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                zipCode: document.getElementById('zipCode').value,
+                comments: document.getElementById('comments').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Store in localStorage (Insecure - PII in localStorage)
+            localStorage.setItem('userData', JSON.stringify(formData));
+            localStorage.setItem('userSSN', formData.ssn);
+            localStorage.setItem('userCreditCard', formData.creditCard);
+            
+            // Display collected data
+            displayUserData(formData);
+            
+            // Send to server (Insecure - No encryption)
+            sendToServer(formData);
+            
+            alert('Data submitted successfully! (Stored insecurely in localStorage)');
+        });
+
+        function displayUserData(data) {
+            const displayDiv = document.getElementById('displayData');
+            displayDiv.innerHTML = `
+                <div class="data-item"><strong>Name:</strong> ${data.fullName}</div>
+                <div class="data-item"><strong>Email:</strong> ${data.email}</div>
+                <div class="data-item"><strong>Phone:</strong> ${data.phone}</div>
+                <div class="data-item"><strong>SSN:</strong> ${data.ssn}</div>
+                <div class="data-item"><strong>Credit Card:</strong> ${data.creditCard}</div>
+                <div class="data-item"><strong>Address:</strong> ${data.address}, ${data.city}, ${data.zipCode}</div>
+                <div class="data-item"><strong>Comments:</strong> ${data.comments}</div>
+                <div class="data-item"><strong>Submitted:</strong> ${data.timestamp}</div>
+            `;
+        }
+
+        // Insecure API call
+        function sendToServer(data) {
+            // Hardcoded API endpoint with credentials
+            const apiUrl = "https://api.example.com/users?api_key=" + API_KEY;
+            
+            // Insecure fetch (No HTTPS enforcement, credentials in URL)
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer test_token_12345',
+                    'X-API-Key': API_KEY
+                },
+                body: JSON.stringify(data)
+            }).catch(err => console.log('API Error:', err));
+        }
+
+        // SQL Injection vulnerable function
+        function vulnerableSearch() {
+            const query = document.getElementById('searchQuery').value;
+            
+            // Vulnerable SQL query construction
+            const sqlQuery = "SELECT * FROM users WHERE id = '" + query + "' OR name = '" + query + "'";
+            
+            document.getElementById('searchResults').innerHTML = `
+                <div class="error">
+                    <strong>Executing SQL Query:</strong><br>
+                    <code>${sqlQuery}</code><br><br>
+                    <strong>⚠️ This is vulnerable to SQL Injection!</strong><br>
+                    Try: <code>' OR '1'='1</code>
+                </div>
+            `;
+            
+            console.log('Executing vulnerable SQL:', sqlQuery);
+        }
+
+        // XSS vulnerable function
+        function postComment() {
+            const comment = document.getElementById('userComment').value;
+            const commentsDiv = document.getElementById('commentsSection');
+            
+            // Vulnerable to XSS - Direct HTML injection
+            commentsDiv.innerHTML += `
+                <div class="data-item">
+                    <strong>User Comment:</strong><br>
+                    ${comment}
+                </div>
+            `;
+            
+            document.getElementById('userComment').value = '';
+        }
+
+        // Load stored data on page load
+        window.addEventListener('load', function() {
+            const storedData = localStorage.getItem('userData');
+            if (storedData) {
+                const data = JSON.parse(storedData);
+                displayUserData(data);
+            }
+        });
+
+        // Exposed sensitive functions
+        function getAdminAccess() {
+            return {
+                username: "admin",
+                password: "Admin123!@#",
+                token: "admin_token_12345",
+                role: "superadmin"
+            };
+        }
+
+        function getDatabaseCredentials() {
+            return dbConfig;
+        }
+
+        // Insecure cookie handling
+        document.cookie = "session_token=abc123def456; path=/";
+        document.cookie = "user_ssn=" + localStorage.getItem('userSSN') + "; path=/";
+        document.cookie = "api_key=" + API_KEY + "; path=/";
+
+        // Console logging sensitive data
+        console.log('AWS Config:', awsConfig);
+        console.log('Database Config:', dbConfig);
+        console.log('API Keys:', { API_KEY, SECRET_KEY, JWT_SECRET });
+    </script>
+</body>
+</html>
