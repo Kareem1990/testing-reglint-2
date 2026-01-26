@@ -19,7 +19,7 @@ jobs:
         id: reglint
         uses: Kareem1990/reglint-action@main
         with:
-          api-key: ${{ secrets.REGLINT_API_KEY }}
+          api-key: ${{ secrets.REGLINT_API_URL }}
           frameworks: 'GDPR,CCPA,HIPAA'
           max-critical: 0
           max-high: 0
