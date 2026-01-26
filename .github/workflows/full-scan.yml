@@ -13,6 +13,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+Update the full scan workflow to not fail on violations (it's just a report):
+
+Change:
+  max-critical: 0
+  max-high: 0
+
+To:
+  max-critical: 999
+  max-high: 999
+  max-medium: 999
+  max-low: 999
+
+Then commit and push.
 
       - name: Run Reglint Full Scan
         id: reglint
@@ -22,9 +35,10 @@ jobs:
           frameworks: 'GDPR,CCPA,HIPAA,PCI-DSS'
           full-repo-scan: true
           create-issue-report: true
-          max-critical: 0
-          max-high: 0
-          max-medium: 5
+          max-critical: 999
+          max-high: 999
+          max-medium: 999
+          max-low: 999
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
