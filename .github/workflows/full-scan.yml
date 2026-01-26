@@ -1,7 +1,12 @@
 name: Full Compliance Scan
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.js'
+      - '**.py'
+      - '**.html'
 
 jobs:
   scan:
