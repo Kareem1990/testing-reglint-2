@@ -1,7 +1,12 @@
 name: Full Compliance Scan
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.js'
+      - '**.py'
+      - '**.html'
 
 jobs:
   scan:
@@ -20,7 +25,7 @@ jobs:
         uses: Kareem1990/reglint-action@main
         with:
           api-key: ${{ secrets.REGLINT_API_URL }}
-          frameworks: 'GDPR,CCPA,HIPAA'
+          frameworks: 'GDPR,CCPA,HIPAA,PCI-DSS'
           max-critical: 0
           max-high: 0
           max-medium: 5

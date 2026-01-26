@@ -42,17 +42,24 @@ jobs:
         uses: Kareem1990/reglint-action@main
         with:
           api-key: ${{ secrets.REGLINT_API_URL }}
-          frameworks: 'GDPR,CCPA'
-          max-critical: 999
+          frameworks: 'GDPR,CCPA,HIPAA,PCI-DSS'
+          max-critical: 0
           max-high: 999
           max-medium: 999
           comment-pr: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check if scan ran successfully
-        if: steps.scan.outcome == 'failure' && steps.scan.outputs.total-violations == ''
+      - name: Check scan results
+        if: always()
         run: |
-          echo "⚠️ Reglint scan failed to run (setup error)"
-          echo "Allowing workflow to continue..."
-          exit 0
+          if [ "${{ steps.scan.outcome }}" == "failure" ] && [ -n "${{ steps.scan.outputs.critical-count }}" ]; then
+            echo "❌ Critical violations found: ${{ steps.scan.outputs.critical-count }}"
+            exit 1
+          elif [ "${{ steps.scan.outcome }}" == "failure" ] && [ -z "${{ steps.scan.outputs.critical-count }}" ]; then
+            echo "⚠️ Scan failed to run (setup error) - allowing workflow to continue"
+            exit 0
+          else
+            echo "✅ No critical violations"
+            exit 0
+          fi
