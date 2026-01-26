@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  reglint:
+    name: Reglint Compliance Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Reglint Scan
+        uses: Kareem1990/reglint-action@main
+        with:
+          api-key: ${{ secrets.REGLINT_API_KEY }}
+          frameworks: 'GDPR,CCPA'
+          max-critical: 0
+          max-high: 3
+          max-medium: 10
+          comment-pr: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

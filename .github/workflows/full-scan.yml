@@ -1,0 +1,38 @@
+name: Full Compliance Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scan:
+    name: Full Repository Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Reglint Full Scan
+        id: reglint
+        uses: Kareem1990/reglint-action@main
+        with:
+          api-key: ${{ secrets.REGLINT_API_KEY }}
+          frameworks: 'GDPR,CCPA,HIPAA'
+          max-critical: 0
+          max-high: 0
+          max-medium: 5
+          comment-pr: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Display Results
+        if: always()
+        run: |
+          echo "Total Violations: ${{ steps.reglint.outputs.total-violations }}"
+          echo "Critical: ${{ steps.reglint.outputs.critical-count }}"
+          echo "High: ${{ steps.reglint.outputs.high-count }}"
+          echo "Medium: ${{ steps.reglint.outputs.medium-count }}"
+          echo "Low: ${{ steps.reglint.outputs.low-count }}"
