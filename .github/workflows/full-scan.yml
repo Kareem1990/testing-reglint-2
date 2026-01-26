@@ -1,24 +1,18 @@
 name: Full Compliance Scan
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - '**.js'
-      - '**.py'
-      - '**.html'
+  workflow_dispatch:
 
 jobs:
-  scan:
+  full-scan:
     name: Full Repository Scan
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Run Reglint Full Scan
         id: reglint
@@ -26,10 +20,11 @@ jobs:
         with:
           api-key: ${{ secrets.REGLINT_API_URL }}
           frameworks: 'GDPR,CCPA,HIPAA,PCI-DSS'
+          full-repo-scan: true
+          create-issue-report: true
           max-critical: 0
           max-high: 0
           max-medium: 5
-          comment-pr: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
