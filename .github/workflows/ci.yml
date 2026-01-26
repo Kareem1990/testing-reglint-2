@@ -42,7 +42,7 @@ jobs:
         uses: Kareem1990/reglint-action@main
         with:
           api-key: ${{ secrets.REGLINT_API_URL }}
-          frameworks: 'GDPR,CCPA'
+          frameworks: 'GDPR,CCPA,HIPAA,PCI-DSS'
           max-critical: 0
           max-high: 999
           max-medium: 999
